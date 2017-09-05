@@ -55,6 +55,9 @@ namespace VisualStudio.SubwordNavigation {
 
             commands.Add(PkgCmdIDList.cmdidSubwordDeletePrevious, () => Delete(MovePrevious));
             commands.Add(PkgCmdIDList.cmdidSubwordDeleteNext, () => Delete(MoveNext));
+
+            commands.Add(PkgCmdIDList.cmdidEndOfWord, () => EndOfWord(false));
+            commands.Add(PkgCmdIDList.cmdidEndOfWordExtend, () => EndOfWord(true));
         }
 
         private void MovePrevious(bool extendSelection) {
@@ -119,6 +122,30 @@ namespace VisualStudio.SubwordNavigation {
             }
 
             for (int i = point; i < extent.Value.Span.End && i < caret.ContainingTextViewLine.End; i++) {
+                operations.MoveToNextCharacter(extendSelection);
+            }
+        }
+
+        private void EndOfWord(bool extendSelection) {
+            if (!extendSelection && !textView.Selection.IsEmpty) {
+                textView.Selection.Select(textView.Selection.ActivePoint, textView.Selection.ActivePoint);
+            }
+
+            var caret = textView.Caret;
+            var point = caret.Position.BufferPosition;
+
+            if (point.Position == textView.TextSnapshot.Length) {
+                return;
+            }
+
+            if (point == caret.ContainingTextViewLine.End) {
+                operations.MoveToStartOfNextLineAfterWhiteSpace(extendSelection);
+                return;
+            }
+
+            var extent = navigator.GetExtentOfWord(point);
+
+            for (int i = point; i < extent.Span.End && i < caret.ContainingTextViewLine.End; i++) {
                 operations.MoveToNextCharacter(extendSelection);
             }
         }

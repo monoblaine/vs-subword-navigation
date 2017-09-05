@@ -108,7 +108,7 @@ namespace VisualStudio.SubwordNavigation {
             }
 
             if (point == caret.ContainingTextViewLine.End) {
-                operations.MoveToStartOfNextLineAfterWhiteSpace(extendSelection);  
+                operations.MoveToStartOfNextLineAfterWhiteSpace(extendSelection);
                 return;
             }
 

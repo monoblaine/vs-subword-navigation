@@ -11,5 +11,7 @@ namespace VisualStudio.SubwordNavigation {
         public const uint cmdidSubwordDeleteNext = 0x105;
         public const uint cmdidEndOfWord = 0x106;
         public const uint cmdidEndOfWordExtend = 0x107;
+        public const uint cmdidStartOfWord = 0x108;
+        public const uint cmdidStartOfWordExtend = 0x109;
     };
 }

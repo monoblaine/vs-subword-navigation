@@ -58,6 +58,9 @@ namespace VisualStudio.SubwordNavigation {
 
             commands.Add(PkgCmdIDList.cmdidEndOfWord, () => EndOfWord(false));
             commands.Add(PkgCmdIDList.cmdidEndOfWordExtend, () => EndOfWord(true));
+
+            commands.Add(PkgCmdIDList.cmdidStartOfWord, () => StartOfWord(false));
+            commands.Add(PkgCmdIDList.cmdidStartOfWordExtend, () => StartOfWord(true));
         }
 
         private void MovePrevious(bool extendSelection) {
@@ -123,6 +126,40 @@ namespace VisualStudio.SubwordNavigation {
 
             for (int i = point; i < extent.Value.Span.End && i < caret.ContainingTextViewLine.End; i++) {
                 operations.MoveToNextCharacter(extendSelection);
+            }
+        }
+
+        private void StartOfWord (bool extendSelection) {
+            if (!extendSelection && !textView.Selection.IsEmpty) {
+                textView.Selection.Select(textView.Selection.ActivePoint, textView.Selection.ActivePoint);
+            }
+
+            var caret = textView.Caret;
+
+            if (caret.InVirtualSpace) {
+                operations.MoveToEndOfLine(extendSelection);
+                return;
+            }
+
+            var point = caret.Position.BufferPosition;
+
+            if (point.Position == 0) {
+                return;
+            }
+
+            if (point == caret.ContainingTextViewLine.Start) {
+                operations.MoveLineUp(extendSelection);
+                operations.MoveToLastNonWhiteSpaceCharacter(extendSelection);
+                if (navigator.GetExtentOfWord(caret.Position.BufferPosition).IsSignificant) {
+                    operations.MoveToNextCharacter(extendSelection);
+                }
+                return;
+            }
+
+            var extent = navigator.GetExtentOfWord(point - 1);
+
+            for (int i = point; i > extent.Span.Start; i--) {
+                operations.MoveToPreviousCharacter(extendSelection);
             }
         }
 

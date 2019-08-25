@@ -92,6 +92,26 @@
           <MenuText>Go To End Of The Word Extend Selection</MenuText>
         </Strings>
       </Button>
+      <Button guid="guidSubwordNavigationCmdSet" id="cmdidStartOfWord" priority="0x0108" type="Button">
+        <Parent guid="guidSubwordNavigationCmdSet" id="MyMenuGroup" />
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Start Of Word</ButtonText>
+          <MenuText>Go To Start Of The Word</MenuText>
+        </Strings>
+      </Button>
+      <Button guid="guidSubwordNavigationCmdSet" id="cmdidStartOfWordExtend" priority="0x0109" type="Button">
+        <Parent guid="guidSubwordNavigationCmdSet" id="MyMenuGroup" />
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Start Of Word Extend</ButtonText>
+          <MenuText>Go To Start Of The Word Extend Selection</MenuText>
+        </Strings>
+      </Button>
     </Buttons>
   </Commands>
 
@@ -107,6 +127,8 @@
       <IDSymbol name="cmdidSubwordDeleteNext" value="0x0105" />
       <IDSymbol name="cmdidEndOfWord" value="0x0106" />
       <IDSymbol name="cmdidEndOfWordExtend" value="0x0107" />
+      <IDSymbol name="cmdidStartOfWord" value="0x0108" />
+      <IDSymbol name="cmdidStartOfWordExtend" value="0x0109" />
     </GuidSymbol>
   </Symbols>
 
